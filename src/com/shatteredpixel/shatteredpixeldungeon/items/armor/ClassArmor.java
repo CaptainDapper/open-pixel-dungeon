@@ -55,6 +55,9 @@ abstract public class ClassArmor extends Armor {
 		case HUNTRESS:
 			classArmor = new HuntressArmor();
 			break;
+		case RAIDER:
+			classArmor = new RaiderArmor();
+			break;
 		}
 		
 		classArmor.STR = armor.STR;

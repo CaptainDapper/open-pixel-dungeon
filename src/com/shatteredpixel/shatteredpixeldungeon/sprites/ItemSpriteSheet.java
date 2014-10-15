@@ -89,6 +89,7 @@ public class ItemSpriteSheet {
     public static final int CURARE_DART		= ROW4+4;
     public static final int JAVELIN			= ROW4+5;
     public static final int TOMAHAWK		= ROW4+6;
+    public static final int WHIP			= ROW4+7;
 
     //Row Five: Armors
     public static final int ARMOR_CLOTH		= ROW5+0;
@@ -100,6 +101,7 @@ public class ItemSpriteSheet {
     public static final int ARMOR_MAGE		= ROW5+6;
     public static final int ARMOR_ROGUE		= ROW5+7;
     public static final int ARMOR_HUNTRESS	= ROW5+8;
+    public static final int ARMOR_RAIDER	= ROW5+9;
 
     //Row Six: Wands
     public static final int WAND_MAGIC_MISSILE	= ROW6+0;

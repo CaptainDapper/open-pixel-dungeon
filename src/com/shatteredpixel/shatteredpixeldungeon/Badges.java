@@ -81,11 +81,12 @@ public class Badges {
 		BOSS_SLAIN_1_MAGE,
 		BOSS_SLAIN_1_ROGUE,
 		BOSS_SLAIN_1_HUNTRESS,
+		BOSS_SLAIN_1_RAIDER,
 		BOSS_SLAIN_1( "1st boss slain", 12 ),
 		BOSS_SLAIN_2( "2nd boss slain", 13 ),
 		BOSS_SLAIN_3( "3rd boss slain", 14 ),
 		BOSS_SLAIN_4( "4th boss slain", 15 ),
-		BOSS_SLAIN_1_ALL_CLASSES( "1st boss slain by Warrior, Mage, Rogue & Huntress", 32, true ),
+		BOSS_SLAIN_1_ALL_CLASSES( "1st boss slain by Warrior, Mage, Rogue & Huntress", 32, true ), //All BASE classes. If more new classes get added, we could have BOSS_SLAIN_1_SECRET_CLASSES
 		BOSS_SLAIN_3_GLADIATOR,
 		BOSS_SLAIN_3_BERSERKER,
 		BOSS_SLAIN_3_WARLOCK,
@@ -93,10 +94,10 @@ public class Badges {
 		BOSS_SLAIN_3_FREERUNNER,
 		BOSS_SLAIN_3_ASSASSIN,
 		BOSS_SLAIN_3_SNIPER,
-		BOSS_SLAIN_3_WARDEN,
+		BOSS_SLAIN_3_WARDEN, //TODO! Subclasses
 		BOSS_SLAIN_3_ALL_SUBCLASSES( 
 			"3rd boss slain by Gladiator, Berserker, Warlock, Battlemage, " +
-			"Freerunner, Assassin, Sniper & Warden", 33, true ),
+			"Freerunner, Assassin, Sniper & Warden", 33, true ), //BOSS_SLAIN_3_SECRET_SUBCLASSES
 		RING_OF_HAGGLER( "Ring of Haggler obtained", 20 ),
 		RING_OF_THORNS( "Ring of Thorns obtained", 21 ),
 		STRENGTH_ATTAINED_1( "13 points of Strength attained", 40 ),
@@ -111,6 +112,7 @@ public class Badges {
 		MASTERY_MAGE,
 		MASTERY_ROGUE,
 		MASTERY_HUNTRESS,
+		MASTERY_RAIDER,
 		ITEM_LEVEL_1( "Item of level 3 acquired", 48 ),
 		ITEM_LEVEL_2( "Item of level 6 acquired", 49 ),
 		ITEM_LEVEL_3( "Item of level 9 acquired", 50 ),
@@ -125,8 +127,9 @@ public class Badges {
 		VICTORY_MAGE,
 		VICTORY_ROGUE,
 		VICTORY_HUNTRESS,
+		VICTORY_RAIDER,
 		VICTORY( "Amulet of Yendor obtained", 22 ),
-		VICTORY_ALL_CLASSES( "Amulet of Yendor obtained by Warrior, Mage, Rogue & Huntress", 36, true ),
+		VICTORY_ALL_CLASSES( "Amulet of Yendor obtained by Warrior, Mage, Rogue & Huntress", 36, true ), //VICTORY_SECRET_CLASSES
 		MASTERY_COMBO( "7-hit combo", 56 ),
 		POTIONS_COOKED_1( "3 potions cooked", 52 ),
 		POTIONS_COOKED_2( "6 potions cooked", 53 ),
@@ -600,6 +603,9 @@ public class Badges {
 				case HUNTRESS:
 					badge = Badge.BOSS_SLAIN_1_HUNTRESS;
 					break;
+				case RAIDER:
+					badge = Badge.BOSS_SLAIN_1_RAIDER;
+					break;
 				}
 				local.add( badge );
 				if (!global.contains( badge )) {
@@ -691,6 +697,9 @@ public class Badges {
 		case HUNTRESS:
 			badge = Badge.MASTERY_HUNTRESS;
 			break;
+		case RAIDER:
+			badge = Badge.MASTERY_RAIDER;
+			break;
 		}
 		
 		if (!global.contains( badge )) {
@@ -772,6 +781,9 @@ public class Badges {
 			break;
 		case HUNTRESS:
 			badge = Badge.VICTORY_HUNTRESS;
+			break;
+		case RAIDER:
+			badge = Badge.VICTORY_RAIDER;
 			break;
 		}
 		local.add( badge );

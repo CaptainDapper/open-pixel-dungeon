@@ -33,11 +33,11 @@ import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Knuckles;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.ShortSword;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Dart;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Boomerang;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Whip;
 import com.watabou.utils.Bundle;
 
 public enum HeroClass {
-
-	WARRIOR( "warrior" ), MAGE( "mage" ), ROGUE( "rogue" ), HUNTRESS( "huntress" );
+	WARRIOR( "warrior" ), MAGE( "mage" ), ROGUE( "rogue" ), HUNTRESS( "huntress" ), RAIDER( "raider" );
 	
 	private String title;
 	
@@ -78,6 +78,15 @@ public enum HeroClass {
 		"Huntresses sense neighbouring monsters even if they are hidden behind obstacles."
 	};
 	
+	public static final String[] RAI_PERKS = {
+		"Raiders start with a unique upgradeable whip.",
+		//"Raiders hate snakes.", I'd love this if snakes ever get added in: Can get terrified debuff when hit by a snake
+		"Raiders can use their whip to sometimes safely drop down floors.", //TODO!
+		"Raiders have better luck at finding items.", //TODO!
+		"Raiders more respectfully desecrate corpses and tombs.", //TODO!
+		"Raiders have a chance of identifying items other than scrolls or potions on pick up." //TODO!
+	};
+	
 	public void initHero( Hero hero ) {
 		
 		hero.heroClass = this;
@@ -97,6 +106,10 @@ public enum HeroClass {
 			
 		case HUNTRESS:
 			initHuntress( hero );
+			break;
+			
+		case RAIDER:
+			initRaider( hero );
 			break;
 		}
 		
@@ -157,9 +170,6 @@ public enum HeroClass {
 	}
 	
 	private static void initHuntress( Hero hero ) {
-		
-		hero.HP = (hero.HT -= 5);
-		
 		(hero.belongings.weapon = new Dagger()).identify();
 		(hero.belongings.armor = new ClothArmor()).identify();
 		Boomerang boomerang = new Boomerang();
@@ -171,6 +181,23 @@ public enum HeroClass {
 		}
 		
 		Dungeon.quickslot = boomerang;
+	}
+	
+	private static void initRaider( Hero hero ) {
+		
+		hero.HP = (hero.HT -= 5);
+		
+		(hero.belongings.weapon = new Dagger()).identify();
+		(hero.belongings.armor = new ClothArmor()).identify();
+		Whip whip = new Whip();
+		whip.identify().collect();
+		new Food().identify().collect();
+		
+		if (Badges.isUnlocked( Badges.Badge.MASTERY_RAIDER )) {
+			new TomeOfMastery().collect();
+		}
+		
+		Dungeon.quickslot = whip;
 	}
 	
 	public String title() {
@@ -188,6 +215,8 @@ public enum HeroClass {
 			return Assets.ROGUE;
 		case HUNTRESS:
 			return Assets.HUNTRESS;
+		case RAIDER:
+			return Assets.RAIDER;
 		}
 		
 		return null;
@@ -204,6 +233,8 @@ public enum HeroClass {
 			return ROG_PERKS;
 		case HUNTRESS:
 			return HUN_PERKS;
+		case RAIDER:
+			return RAI_PERKS;
 		}
 		
 		return null;

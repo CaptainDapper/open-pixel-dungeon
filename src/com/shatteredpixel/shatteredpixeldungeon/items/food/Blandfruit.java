@@ -129,6 +129,7 @@ public class Blandfruit extends Food {
                         break;
                     case ROGUE:
                     case HUNTRESS:
+                    case RAIDER:
                         break;
                 }
             }

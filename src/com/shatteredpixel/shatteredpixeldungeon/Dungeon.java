@@ -362,17 +362,20 @@ public class Dungeon {
 		return Random.Int( 12 * (1 + arcaneStyli) ) < depth;
 	}
 	
-	private static final String RG_GAME_FILE	= "game.dat";
-	private static final String RG_DEPTH_FILE	= "depth%d.dat";
+	private static final String ROGUE_GAME_FILE	= "game.dat";
+	private static final String ROGUE_DEPTH_FILE	= "depth%d.dat";
 	
-	private static final String WR_GAME_FILE	= "warrior.dat";
-	private static final String WR_DEPTH_FILE	= "warrior%d.dat";
+	private static final String WARRIOR_GAME_FILE	= "warrior.dat";
+	private static final String WARRIOR_DEPTH_FILE	= "warrior%d.dat";
 	
-	private static final String MG_GAME_FILE	= "mage.dat";
-	private static final String MG_DEPTH_FILE	= "mage%d.dat";
+	private static final String MAGE_GAME_FILE	= "mage.dat";
+	private static final String MAGE_DEPTH_FILE	= "mage%d.dat";
 	
-	private static final String RN_GAME_FILE	= "ranger.dat";
-	private static final String RN_DEPTH_FILE	= "ranger%d.dat";
+	private static final String HUNTRESS_GAME_FILE	= "ranger.dat";
+	private static final String HUNTRESS_DEPTH_FILE	= "ranger%d.dat";
+	
+	private static final String RAIDER_GAME_FILE	= "raider.dat";
+	private static final String RAIDER_DEPTH_FILE	= "raider%d.dat";
 	
 	private static final String VERSION		= "version";
 	private static final String HERO		= "hero";
@@ -392,26 +395,30 @@ public class Dungeon {
 	public static String gameFile( HeroClass cl ) {
 		switch (cl) {
 		case WARRIOR:
-			return WR_GAME_FILE;
+			return WARRIOR_GAME_FILE;
 		case MAGE:
-			return MG_GAME_FILE;
+			return MAGE_GAME_FILE;
 		case HUNTRESS:
-			return RN_GAME_FILE;
+			return HUNTRESS_GAME_FILE;
+		case RAIDER:
+			return RAIDER_GAME_FILE;
 		default:
-			return RG_GAME_FILE;
+			return ROGUE_GAME_FILE;
 		}
 	}
 	
 	private static String depthFile( HeroClass cl ) {
 		switch (cl) {
 		case WARRIOR:
-			return WR_DEPTH_FILE;
+			return WARRIOR_DEPTH_FILE;
 		case MAGE:
-			return MG_DEPTH_FILE;
+			return MAGE_DEPTH_FILE;
 		case HUNTRESS:
-			return RN_DEPTH_FILE;
+			return HUNTRESS_DEPTH_FILE;
+		case RAIDER:
+			return RAIDER_DEPTH_FILE;
 		default:
-			return RG_DEPTH_FILE;
+			return ROGUE_DEPTH_FILE;
 		}
 	}
 	
