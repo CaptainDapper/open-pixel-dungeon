@@ -39,6 +39,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Archs;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Icons;
+import com.shatteredpixel.shatteredpixeldungeon.ui.NextButton;
+import com.shatteredpixel.shatteredpixeldungeon.ui.PrevButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.RedButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.SimpleButton;
 import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
@@ -71,8 +73,15 @@ public class StartScene extends PixelScene {
 	private float height;
 	private float top;
 	private float left;
+
+	private static HashMap<HeroClass, GemButton> gems = new HashMap<HeroClass, StartScene.GemButton>();;
 	
-	private static HashMap<HeroClass, GemButton> gems = new HashMap<HeroClass, StartScene.GemButton>();
+	private int heroPage = 0;
+	private GemButton[][] gemBtns;
+	private NextHeroPage next;
+	private PrevHeroPage prev;
+	
+	private BitmapText title;
 	
 	private Avatar avatar;
 	private NinePatch frame;
@@ -84,6 +93,7 @@ public class StartScene extends PixelScene {
 	private GameButton btnNewGame;
 	
 	private boolean huntressUnlocked;
+	private boolean hideSecretHeroPage = true;
 	private Group unlock;
 	
 	public static HeroClass curClass;
@@ -109,33 +119,14 @@ public class StartScene extends PixelScene {
 		archs.setSize( w, h );
 		add( archs );
 		
-		BitmapText title = PixelScene.createText( TXT_TITLE, 9 );
+		title = PixelScene.createText( TXT_TITLE, 9 );
 		title.hardlight( Window.TITLE_COLOR );
 		title.measure();
 		title.x = align( (w - title.width()) / 2 );
 		title.y = align( top );
 		add( title );
 		
-		float pos = title.y + title.height() + GAP;
-		
-		GemButton btns[] = {
-			new GemButton( HeroClass.WARRIOR ), 
-			new GemButton( HeroClass.MAGE ), 
-			new GemButton( HeroClass.ROGUE ), 
-			new GemButton( HeroClass.HUNTRESS ) };
-		
-		float space = width;
-		for (GemButton btn : btns) {
-			space -= btn.width();
-		}
-		
-		float p = 0;
-		for (GemButton btn : btns) {
-			add( btn );
-			btn.setPos( align( left + p ), align( pos ) );
-			p += btn.width() + space / 3;
-		}
-		
+		updateHeroGems(heroPage);
 		
 		frame = Chrome.get( Chrome.Type.TOAST_TR );
 		add( frame );
@@ -175,10 +166,12 @@ public class StartScene extends PixelScene {
 		
 		avatar = new Avatar();
 		
+		float q = (hideSecretHeroPage ? gemBtns[0][0].bottom() : next.bottom());
+		
 		NinePatch avFrame = Chrome.get( Chrome.Type.TOAST_TR );
 		avFrame.size( avatar.width() * 1.6f, avatar.height() * 1.6f );
 		avFrame.x = align( (w - avFrame.width()) / 2 );
-		avFrame.y = align( (frame.y + btns[0].bottom() - avFrame.height()) / 2 );
+		avFrame.y = align( (frame.y + q - avFrame.height()) / 2 );
 		add( avFrame );
 		
 		className = PixelScene.createText( "Placeholder", 9 );
@@ -220,6 +213,10 @@ public class StartScene extends PixelScene {
 				case HUNTRESS:
 					text = HeroSubClass.SNIPER.desc() + "\n\n" + HeroSubClass.WARDEN.desc();
 					break;
+				case RAIDER:
+					//TODO!
+					//text = HeroSubClass.SNIPER.desc() + "\n\n" + HeroSubClass.WARDEN.desc();
+					break;
 				}
 				StartScene.this.add( new WndTitledMessage( Icons.MASTERY.get(), "Mastery", text ) );
 			}
@@ -238,7 +235,7 @@ public class StartScene extends PixelScene {
 			text.maxWidth = (int)frame.innerWidth();
 			text.measure();
 			
-			pos = frame.center().y - text.height() / 2;
+			float pos = frame.center().y - text.height() / 2;
 			for (BitmapText line : text.new LineSplitter().split()) {
 				line.measure();
 				line.hardlight( 0xFFFF00 );
@@ -249,11 +246,73 @@ public class StartScene extends PixelScene {
 				pos += line.height(); 
 			}
 		}
+		hideSecretHeroPage = Badges.isUnlocked( Badges.Badge.VICTORY );
 		
 		curClass = null;
 		updateClass( HeroClass.values()[ShatteredPixelDungeon.lastClass()] );
 		
 		fadeIn();
+	}
+	
+	private void updateHeroGems(int oldHeroPage) {
+		_updateHeroGems(oldHeroPage, oldHeroPage, true);
+	}
+	
+	private void updateHeroGems(int oldHeroPage, int newHeroPage) {
+		_updateHeroGems(oldHeroPage, newHeroPage, false);
+	}
+	
+	private void _updateHeroGems(int oldHeroPage, int newHeroPage, boolean doFirstRun) {
+		//Clear old gems
+		if (!doFirstRun) {
+			for (GemButton btn : gemBtns[oldHeroPage]) {
+				remove( btn );
+			}
+		} else {
+			gemBtns = new GemButton[2][4];
+			gemBtns[0][0] = new GemButton( HeroClass.WARRIOR );
+			gemBtns[0][1] = new GemButton( HeroClass.MAGE );
+			gemBtns[0][2] = new GemButton( HeroClass.ROGUE );
+			gemBtns[0][3] = new GemButton( HeroClass.HUNTRESS );
+			gemBtns[1][0] = new GemButton( HeroClass.RAIDER );
+			
+			if (!hideSecretHeroPage) {
+				next = new NextHeroPage();
+				prev = new PrevHeroPage();
+			}
+		}
+		
+		//Make new gems
+		float pos = title.y + title.height() + GAP;
+				
+		float space = width;
+		for (GemButton btn : gemBtns[heroPage]) {
+			if (btn != null) {
+				space -= btn.width();
+			}
+		}
+
+		float p = 0;
+		for (GemButton btn : gemBtns[heroPage]) {
+			if (btn != null) {
+				add( btn );
+				btn.setPos( align( left + p ), align( pos ) );
+				p += btn.width() + space / 3;
+			}
+		}
+		
+		//Clear and add new page buttons
+		if (!hideSecretHeroPage) {
+			if (newHeroPage == 0) {
+				remove( prev );
+				add( next );
+				next.setPos( align( left + width - next.width() ), align( gemBtns[heroPage][0].bottom() ) );
+			} else {
+				remove( next );
+				add( prev );
+				prev.setPos( align( left ), align( gemBtns[heroPage][0].bottom() ) );
+			}
+		}
 	}
 	
 	private void updateClass( HeroClass cl ) {
@@ -315,6 +374,9 @@ public class StartScene extends PixelScene {
 				break;
 			case HUNTRESS:
 				badgeToCheck = Badges.Badge.MASTERY_HUNTRESS;
+				break;
+			case RAIDER:
+				badgeToCheck = Badges.Badge.MASTERY_RAIDER;
 				break;
 			}
 			btnMastery.active = 
@@ -501,6 +563,24 @@ public class StartScene extends PixelScene {
 		public void secondary( String text ) {
 			secondary.text( text );
 			secondary.measure();
+		}
+	}
+
+	private class NextHeroPage extends NextButton {
+		@Override
+		protected void onClick() {
+			int oldHeroPage = heroPage;
+			heroPage += 1;
+			updateHeroGems(oldHeroPage, heroPage);
+		}
+	}
+
+	private class PrevHeroPage extends PrevButton {
+		@Override
+		protected void onClick() {
+			int oldHeroPage = heroPage;
+			heroPage -= 1;
+			updateHeroGems(oldHeroPage, heroPage);
 		}
 	}
 }
