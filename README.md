@@ -18,6 +18,8 @@ https://github.com/00-Evan/PD-classes
 https://github.com/sloanr333/open-pixel-dungeon/tree/opdReady-shattered  
 https://github.com/sloanr333/open-pixel-dungeon/tree/opdReady-watabou
 
+Alternatively, you can download my latest build (may be buggy) here: http://goalsandgaming.com/opd/PixelDungeon.apk
+
 ### Disclaimer
 Thank you! to both  
 https://github.com/watabou/pixel-dungeon  
