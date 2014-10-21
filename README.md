@@ -18,7 +18,7 @@ If you want to build it with Pixel Dungeon and Shattered Pixel Dungeon(for examp
 
 https://github.com/00-Evan/PD-classes
 https://github.com/sloanr333/open-pixel-dungeon/tree/opdReady-shattered
-https://github.com/sloanr333/open-pixel-dungeon/tree/opdReady-watabou1.7.2
+https://github.com/sloanr333/open-pixel-dungeon/tree/opdReady-watabou
 
 Disclaimer
 ==============
@@ -27,3 +27,8 @@ Thank you! to both
 https://github.com/watabou/pixel-dungeon
 -and-
 https://github.com/00-Evan/shattered-pixel-dungeon
+
+Updates
+==============
+0.1.0a - Update shattered to 0.2.1c
+0.1.0 - initial release
