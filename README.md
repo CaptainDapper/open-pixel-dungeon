@@ -1,16 +1,10 @@
-Pixel Dungeon
+Open Pixel Dungeon
 =============
 
-Traditional roguelike game with pixel-art graphics and simple interface.
+More info to come!
 
-Pixel Dungeon on GooglePlay: 
-https://play.google.com/store/apps/details?id=com.watabou.pixeldungeon
+This essentially provides a wrapper to choose which mod of the game to use. Not particularly useful right now, but as the number of published mods grows it could show it's strength! If it's done right...
 
-Official web-site: 
-http://pixeldungeon.watabou.ru/
-
-Developer's blog: 
-http://pixeldungeon.tumblr.com/
-
-To build the game you will need my unnamed game library:
-https://github.com/watabou/PD-classes
+To build your game into the framework, you will need the following sources linked:
+https://github.com/00-Evan/PD-classes
+...
