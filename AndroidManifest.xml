@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.opd.openpixeldungeon"
-	android:versionCode="01"
-	android:versionName="0.1.0"
+	android:versionCode="02"
+	android:versionName="0.1.0a"
 	android:installLocation="auto">
 
     <uses-permission android:name="android.permission.VIBRATE"/>

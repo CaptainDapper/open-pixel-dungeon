@@ -34,7 +34,6 @@ import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.scenes.PixelScene;
-import com.watabou.pixeldungeon.utils.GLog;
 
 public class OPDGame extends Game {
 
@@ -50,8 +49,8 @@ public class OPDGame extends Game {
 		Game.switchScene(c);
 		
 		if (c.getCanonicalName().contains("com.shatteredpixel.shatteredpixeldungeon.scenes")) {
-			subVersion = "0.2.1b";
-			subVersionCode = 11;
+			subVersion = "0.2.1c";
+			subVersionCode = 12;
 		} else if (c.getCanonicalName().contains("com.watabou.pixeldungeon.scenes")) {
 			subVersion = "1.7.2a";
 			subVersionCode = 61;
