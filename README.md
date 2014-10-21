@@ -25,5 +25,5 @@ https://github.com/watabou/pixel-dungeon
 https://github.com/00-Evan/shattered-pixel-dungeon
 
 ### Updates
-*0.1.0a - Update shattered to 0.2.1c
-*0.1.0 - initial release
+0.1.0a - Update shattered to 0.2.1c  
+0.1.0 - initial release
