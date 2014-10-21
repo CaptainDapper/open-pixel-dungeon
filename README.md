@@ -11,13 +11,17 @@ Work in Progress! There's a lot that needs to be done before I can feel good abo
 How to Use
 ==============
 To build your game into the framework, you will need the following sources linked to your game:
+
 https://github.com/00-Evan/PD-classes
+
 https://github.com/sloanr333/open-pixel-dungeon/tree/opdReady-shattered
 
 If you want to build it with Pixel Dungeon and Shattered Pixel Dungeon(for example) you need the following sources linked:
 
 https://github.com/00-Evan/PD-classes
+
 https://github.com/sloanr333/open-pixel-dungeon/tree/opdReady-shattered
+
 https://github.com/sloanr333/open-pixel-dungeon/tree/opdReady-watabou
 
 Disclaimer
@@ -25,7 +29,9 @@ Disclaimer
 Thank you! to both
 
 https://github.com/watabou/pixel-dungeon
+
 -and-
+
 https://github.com/00-Evan/shattered-pixel-dungeon
 
 Updates
