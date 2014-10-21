@@ -1,13 +1,11 @@
 # Open Pixel Dungeon - Lobby/Framework
 
 ### Description
-??? glurp glurp
+This essentially provides a lobby to choose which mod of the game to use. Not particularly useful right now, but as the number of published mods grows it could show it's strength! I am trying to build it into a proper framework, to make easy creation of games that can be ran in the lobby.
 
 ### Updates
 0.1.0a - Update shattered to 0.2.1c  
 0.1.0 - initial release
-
-This essentially provides a lobby to choose which mod of the game to use. Not particularly useful right now, but as the number of published mods grows it could show it's strength! I am trying to build it into a proper framework, to make easy creation of games that can be ran in the lobby.
 
 ### Status
 
