@@ -19,6 +19,7 @@ package com.opd.openpixeldungeon;
 
 public class Assets {
 /*
+	public static final String BANNERS	= "banners.png";
 	public static final String ARCS_BG		= "arcs1.png";
 	public static final String ARCS_FG		= "arcs2.png";
 	public static final String DASHBOARD	= "dashboard.png";
@@ -158,8 +159,12 @@ public class Assets {
 	public static final String SND_BONES	= "snd_bones.mp3";
 */
 	public static final String BANNERS	= "banners.png";
+	public static final String ARCS_BG		= "watabou/arcs1.png";
+	public static final String ARCS_FG		= "watabou/arcs2.png";
 	public static final String DASHBOARD	= "dashboard.png";
 
+	public static final String ICONS	= "watabou/icons.png";
+	
 	public static final String FIREBALL		= "fireball.png";
 
 	public static final String FONTS1X	= "watabou/font1x.png";
@@ -172,4 +177,7 @@ public class Assets {
 	
 	public static final String SND_DESCEND	= "watabou/snd_descend.mp3";
 
+	public static final String WATABOU_ICON = "watabou_icon.png";
+	public static final String SHATTERED_ICON = "shattered_icon.png";
+	public static final String MOFOOD_ICON = "mofood_icon.png";
 }
