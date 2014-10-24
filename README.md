@@ -23,6 +23,7 @@ First, choose a one word string (authorPreface) of characters that best represen
 * Similarly, you'll need to put all the assets for your game in a subfolder of assets. (Eg. Folder: "assets/authorPreface(or gamePreface, revisionPreface, whatever)/items.png" Code: "public static final String SND\_CLICK	= "authorPreface/snd\_click.mp3";)"
 * All preferences are shared across games. This means if you need to add one, it needs to be added to the lobby code, too. You could use your game's own preferences class, but avoid key collisions with the Lobby's Preferences, please.
 * don't extend Game or Scene; instead extend OPDGame and OPDScene. I might refactor them to LobbyGame and LobbyScene, or SuperGame SuperScene, idk I suck at naming stuff.
+* see this: https://github.com/sloanr333/open-pixel-dungeon/blob/openpd/vagueinstructions.txt
 
 ##### Your own lobby
 If you want to build it with Pixel Dungeon and Shattered Pixel Dungeon(for example) you need the following sources linked to the openpd branch:
