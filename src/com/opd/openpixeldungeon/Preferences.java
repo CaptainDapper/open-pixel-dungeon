@@ -17,7 +17,7 @@
  */
 package com.opd.openpixeldungeon;
 
-import com.watabou.noosa.Game;
+import com.opd.noosa.OPDGame;
 
 import android.content.SharedPreferences;
 
@@ -42,7 +42,7 @@ public enum Preferences {
 	
 	private SharedPreferences get() {
 		if (prefs == null) {
-			prefs = Game.instance.getPreferences( Game.MODE_PRIVATE );
+			prefs = OPDGame.instance.getPreferences( OPDGame.MODE_PRIVATE );
 		}
 		return prefs;
 	}

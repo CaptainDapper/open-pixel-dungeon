@@ -24,16 +24,14 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.ui.Button;
 import com.opd.noosa.OPDGame;
 import com.opd.openpixeldungeon.Assets;
+import com.opd.openpixeldungeon.SubGames;
 import com.opd.openpixeldungeon.effects.BannerSprites;
 import com.opd.openpixeldungeon.effects.Fireball;
 import com.opd.openpixeldungeon.scenes.PixelScene;
-import com.watabou.pixeldungeon.ui.Archs;
-import com.watabou.pixeldungeon.ui.ExitButton;
+import com.opd.openpixeldungeon.ui.Archs;
+import com.opd.openpixeldungeon.ui.ExitButton;
 
 public class TitleScene extends PixelScene {
-
-	private static final String TXT_WATABOU		= "Pixel Dungeon";
-	private static final String TXT_SHATTERED	= "Shattered Pixel Dungeon";
 	
 	@Override
 	public void create() {
@@ -59,34 +57,28 @@ public class TitleScene extends PixelScene {
 		placeTorch( title.x + 18, title.y + 20 );
 		placeTorch( title.x + title.width - 18, title.y + 20 );
 		
-		DashboardItem btnWatabou = new DashboardItem( TXT_WATABOU, 0 ) {
-			@Override
-			protected void onClick() {
-				OPDGame.switchScene( com.watabou.pixeldungeon.scenes.TitleScene.class );
-			}
-		};
-		btnWatabou.setPos( (w - btnWatabou.width())/ 2 , title.y + title.height() );
-		add( btnWatabou );
-
-		DashboardItem btnShattered = new DashboardItem( TXT_SHATTERED, 1 ) {
-			@Override
-			protected void onClick() {
-				OPDGame.switchScene( com.shatteredpixel.shatteredpixeldungeon.scenes.TitleScene.class );
-			}
-		};
-		btnShattered.setPos( (w - btnShattered.width())/ 2, btnWatabou.bottom() );
-		add( btnShattered );
+		int yPos = (int) (title.y + title.height());
 		
-		BitmapText version = new BitmapText( "v " + OPDGame.subVersion, font1x );
-		version.measure();
-		version.hardlight( 0x888888 );
-		version.x = w - version.width();
-		version.y = h - version.height();
-		add( version );
+		for (int i=0; i<SubGames.all.length; i++) {
+			final SubGames.SubGame game = SubGames.all[i];
+			
+			DashboardItem btnGame = new DashboardItem( game.title, i ) {
+				@Override
+				protected void onClick() {
+					OPDGame.switchScene( game.titleSceneClass );
+				}
+			};
+			btnGame.setPos( (w - btnGame.width())/ 2 , yPos );
+			add( btnGame );
+			
+			yPos += btnGame.height();
+		}
 		
 		ExitButton btnExit = new ExitButton();
 		btnExit.setPos( w - btnExit.width(), 0 );
 		add( btnExit );
+		
+		displayVersion(w, h);
 		
 		fadeIn();
 	}
@@ -101,7 +93,7 @@ public class TitleScene extends PixelScene {
 		
 		public static final float SIZE	= 48;
 		
-		private static final int IMAGE_SIZE	= 32;
+		//private static final int IMAGE_SIZE	= 32;
 		
 		private Image image;
 		private BitmapText label;
@@ -109,7 +101,9 @@ public class TitleScene extends PixelScene {
 		public DashboardItem( String text, int index ) {
 			super();
 			
-			image.frame( image.texture.uvRect( index * IMAGE_SIZE, 0, (index + 1) * IMAGE_SIZE, IMAGE_SIZE ) );
+			this.image.texture( SubGames.all[index].asset );
+			
+			//image.frame( image.texture.uvRect( index * IMAGE_SIZE, 0, (index + 1) * IMAGE_SIZE, IMAGE_SIZE ) );
 			this.label.text( text );
 			this.label.measure();
 			
@@ -119,8 +113,8 @@ public class TitleScene extends PixelScene {
 		@Override
 		protected void createChildren() {
 			super.createChildren();
-			
-			image = new Image( Assets.DASHBOARD );
+
+			image = new Image();
 			add( image );
 			
 			label = createText( 9 );

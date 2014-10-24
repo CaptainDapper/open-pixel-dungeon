@@ -26,44 +26,74 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
-import com.opd.openpixeldungeon.Preferences;
-import com.opd.openpixeldungeon.scenes.TitleScene;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Scene;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.pixeldungeon.scenes.GameScene;
-import com.watabou.pixeldungeon.scenes.PixelScene;
+
+import com.opd.openpixeldungeon.Preferences;
+import com.opd.openpixeldungeon.SubGames;
+import com.opd.openpixeldungeon.scenes.TitleScene;
+import com.opd.openpixeldungeon.scenes.PixelScene;
 
 public class OPDGame extends Game {
 
+	public static OPDGame opdInstance;
+	protected OPDScene opdScene;
+	
+	public static Class<? extends OPDScene> gameSceneClass;
+	public static String gameTitle;
+    public static String subName;
 	public static String subVersion;
     public static int subVersionCode;
 
 	public OPDGame(Class<? extends Scene> c) {
 		super( TitleScene.class );
-		// TODO Auto-generated constructor stub
+	}
+	
+	private static void loadSubGame( Class<? extends Scene> c ) {
+		boolean gameFound = false;
+		for (int i=0; i<SubGames.all.length; i++) {
+			SubGames.SubGame game = SubGames.all[i];
+			
+			if (c.getCanonicalName().contains(game.canonicalName)) {
+				gameTitle = game.title;
+				gameSceneClass = game.titleSceneClass;
+				subName = game.refName;
+				subVersion = game.version;
+				subVersionCode = game.versionCode;
+				
+				gameFound = true;
+			}
+			
+			if (!gameFound) {
+				gameTitle = "OPD Lobby";
+				subName = "opd";
+				subVersion = Game.version;
+				subVersionCode = Game.versionCode;
+			}
+		}
 	}
 	
 	public static void switchScene( Class<? extends Scene> c ) {
-		Game.switchScene(c);
+		loadSubGame(c);
 		
-		if (c.getCanonicalName().contains("com.shatteredpixel.shatteredpixeldungeon.scenes")) {
-			subVersion = "0.2.1c";
-			subVersionCode = 12;
-		} else if (c.getCanonicalName().contains("com.watabou.pixeldungeon.scenes")) {
-			subVersion = "1.7.2a";
-			subVersionCode = 61;
-		} else {
-			subVersion = version;
-			subVersionCode = versionCode;
-		}
+		Game.switchScene(c);
+	}
+	
+	@Override
+	protected void switchScene() {
+		opdScene = (OPDScene) requestedScene;
+		
+		super.switchScene();
 	}
 	
 	@Override
 	protected void onCreate( Bundle savedInstanceState ) {
 		super.onCreate(savedInstanceState);
-
+		
+		opdInstance = this;
+		
 		subVersion = version;
 		subVersionCode = versionCode;
 		
@@ -81,6 +111,10 @@ public class OPDGame extends Game {
 		Sample.INSTANCE.enable( soundFx() );
 	}
 	
+	public static OPDScene opdScene() {
+		return opdInstance.opdScene;
+	}
+	
 	@Override
 	public void onWindowFocusChanged( boolean hasFocus ) {
 		
@@ -91,9 +125,17 @@ public class OPDGame extends Game {
 		}
 	}
 	
-	public static void switchNoFade( Class<? extends PixelScene> c ) {
+	public static void switchNoFade( Class<? extends OPDScene> c ) {
 		PixelScene.noFade = true;
 		switchScene( c );
+	}
+	
+	public static void goBack() {
+		if (scene() instanceof TitleScene) {
+			instance.finish();
+		} else {
+			switchScene( TitleScene.class );
+		}
 	}
 	
 	/*
@@ -197,8 +239,13 @@ public class OPDGame extends Game {
 	
 	public static void brightness( boolean value ) {
 		Preferences.INSTANCE.put( Preferences.KEY_BRIGHTNESS, value );
-		if (scene() instanceof GameScene) {
-			((GameScene)scene()).brightness( value );
+		
+		if (gameSceneClass == com.watabou.pixeldungeon.scenes.GameScene.class) {
+			((com.watabou.pixeldungeon.scenes.GameScene)scene()).brightness( value );
+		
+		} else if (gameSceneClass == com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene.class) {
+			((com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene)scene()).brightness( value );
+		
 		}
 	}
 	
