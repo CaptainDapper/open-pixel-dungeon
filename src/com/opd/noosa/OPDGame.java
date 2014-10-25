@@ -64,14 +64,17 @@ public class OPDGame extends Game {
 				subVersionCode = game.versionCode;
 				
 				gameFound = true;
+				break;
 			}
-			
-			if (!gameFound) {
-				gameTitle = "OPD Lobby";
-				subName = "opd";
-				subVersion = Game.version;
-				subVersionCode = Game.versionCode;
-			}
+		}
+		
+		if (!gameFound) {
+			SubGames.SubGame defaultGame = new SubGames.SubGame();
+			gameTitle = defaultGame.title;
+			gameSceneClass = defaultGame.titleSceneClass;
+			subName = defaultGame.refName;
+			subVersion = defaultGame.version;
+			subVersionCode = defaultGame.versionCode;
 		}
 	}
 	
@@ -93,9 +96,8 @@ public class OPDGame extends Game {
 		super.onCreate(savedInstanceState);
 		
 		opdInstance = this;
-		
-		subVersion = version;
-		subVersionCode = versionCode;
+
+		loadSubGame( TitleScene.class );
 		
 		updateImmersiveMode();
 		

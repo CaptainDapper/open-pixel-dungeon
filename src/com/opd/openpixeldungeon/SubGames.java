@@ -1,5 +1,6 @@
 package com.opd.openpixeldungeon;
 
+import com.opd.noosa.OPDGame;
 import com.opd.noosa.OPDScene;
 import com.opd.openpixeldungeon.Assets;
 
@@ -14,6 +15,7 @@ public class SubGames {
 		{
 			title = "Pixel Dungeon";
 			refName = "watabou";
+			author = "watabou";
 			version = "1.7.2a";
 			versionCode = 62;
 			titleSceneClass = com.watabou.pixeldungeon.scenes.TitleScene.class;
@@ -26,6 +28,7 @@ public class SubGames {
 		{
 			title = "Shattered Pixel Dungeon";
 			refName = "shattered";
+			author = "00-Evan";
 			version = "0.2.1c";
 			versionCode = 12;
 			titleSceneClass = com.shatteredpixel.shatteredpixeldungeon.scenes.TitleScene.class;
@@ -38,6 +41,7 @@ public class SubGames {
 		{
 			title = "Mo' Food Mod";
 			refName = "mofood";
+			author = "roastedlasagna";
 			version = "1.1.3";
 			versionCode = 59;
 			titleSceneClass = com.watabou.mofoodpd.scenes.TitleScene.class;
@@ -47,10 +51,11 @@ public class SubGames {
 	}
 	
 	public static class SubGame {
-		public String title;
-		public String refName;
-		public String version;
-		public int versionCode;
+		public String title = "Lobby";
+		public String refName = "lobby";
+		public String author = "SloanReynolds";
+		public String version = OPDGame.version;
+		public int versionCode = OPDGame.versionCode;
 		public Class<? extends OPDScene> titleSceneClass;
 		public String canonicalName;
 		public String asset;

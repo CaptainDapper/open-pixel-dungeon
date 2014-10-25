@@ -17,21 +17,31 @@
  */
 package com.opd.openpixeldungeon.scenes;
 
+import java.util.ArrayList;
+
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.ui.Button;
+import com.watabou.noosa.ui.Component;
 import com.opd.noosa.OPDGame;
 import com.opd.openpixeldungeon.Assets;
 import com.opd.openpixeldungeon.SubGames;
+import com.opd.openpixeldungeon.SubGames.SubGame;
 import com.opd.openpixeldungeon.effects.BannerSprites;
 import com.opd.openpixeldungeon.effects.Fireball;
 import com.opd.openpixeldungeon.scenes.PixelScene;
 import com.opd.openpixeldungeon.ui.Archs;
 import com.opd.openpixeldungeon.ui.ExitButton;
+import com.opd.openpixeldungeon.ui.ScrollPane;
 
 public class TitleScene extends PixelScene {
+	
+	private static final int WIDTH = 120;
+
+	private ScrollPane list;
+	private ArrayList<ListItem> subGamesList = new ArrayList<TitleScene.ListItem>();
 	
 	@Override
 	public void create() {
@@ -59,20 +69,21 @@ public class TitleScene extends PixelScene {
 		
 		int yPos = (int) (title.y + title.height());
 		
-		for (int i=0; i<SubGames.all.length; i++) {
-			final SubGames.SubGame game = SubGames.all[i];
-			
-			DashboardItem btnGame = new DashboardItem( game.title, i ) {
-				@Override
-				protected void onClick() {
-					OPDGame.switchScene( game.titleSceneClass );
+		list = new ScrollPane( new Component() ) {
+			@Override
+			public void onClick( float x, float y ) {
+				int size = subGamesList.size();
+				for (int i=0; i < size; i++) {
+					if (subGamesList.get( i ).onClick( x, y )) {
+						break;
+					}
 				}
-			};
-			btnGame.setPos( (w - btnGame.width())/ 2 , yPos );
-			add( btnGame );
-			
-			yPos += btnGame.height();
-		}
+			}
+		};
+		add( list );
+		list.setRect( (w - WIDTH)/2, yPos, WIDTH, h - yPos );
+		
+		updateList();
 		
 		ExitButton btnExit = new ExitButton();
 		btnExit.setPos( w - btnExit.width(), 0 );
@@ -88,26 +99,60 @@ public class TitleScene extends PixelScene {
 		fb.setPos( x, y );
 		add( fb );
 	}
-	
-	private static class DashboardItem extends Button {
+
+	private void updateList() {
+		/*
+		txtTitle.text( Utils.format( TXT_TITLE, showPotions ? TXT_POTIONS : TXT_SCROLLS ) );
+		txtTitle.measure();
+		txtTitle.x = PixelScene.align( PixelScene.uiCamera, (WIDTH - txtTitle.width()) / 2 );
+		*/
 		
-		public static final float SIZE	= 48;
+		subGamesList.clear();
 		
-		//private static final int IMAGE_SIZE	= 32;
+		Component content = list.content();
+		content.clear();
+		list.scrollTo( 0, 0 );
 		
+		float pos = 0;
+		for (SubGame theSubGame : SubGames.all) {
+			ListItem gameBtn = new ListItem( theSubGame );
+			gameBtn.setRect( 0, pos, WIDTH, gameBtn.height() );
+			content.add( gameBtn );
+			subGamesList.add( gameBtn );
+			
+			pos += gameBtn.height();
+		}
+		
+		content.setSize( WIDTH, pos );
+	}
+
+	private static class ListItem extends Button {
+		private static final int GAP = 2;
+		private BitmapText gameName;
+		private BitmapText gameAuthor;
+		private BitmapText gameVersion;
 		private Image image;
-		private BitmapText label;
+		private SubGame subGame;
 		
-		public DashboardItem( String text, int index ) {
+		public ListItem(SubGame subGame) {
 			super();
 			
-			this.image.texture( SubGames.all[index].asset );
+			image.texture(subGame.asset);
 			
-			//image.frame( image.texture.uvRect( index * IMAGE_SIZE, 0, (index + 1) * IMAGE_SIZE, IMAGE_SIZE ) );
-			this.label.text( text );
-			this.label.measure();
+			gameName.text( subGame.title );
+			gameName.measure();
 			
-			setSize( SIZE, SIZE );
+			gameAuthor.text( "Author: " + subGame.author );
+			gameAuthor.measure();
+			gameAuthor.hardlight(0xaaaaaa);
+			
+			gameVersion.text( "v" + subGame.version );
+			gameVersion.measure();
+			gameVersion.hardlight(0x888888);
+			
+			setSize( WIDTH, 36 );
+			
+			this.subGame = subGame;
 		}
 		
 		@Override
@@ -116,26 +161,48 @@ public class TitleScene extends PixelScene {
 
 			image = new Image();
 			add( image );
+
+			gameName = createText( 9 );
+			add( gameName );
 			
-			label = createText( 9 );
-			add( label );
+			gameAuthor = createText( 6 );
+			add( gameAuthor );
+			
+			gameVersion = createText( 6 );
+			add( gameVersion );
 		}
 		
 		@Override
 		protected void layout() {
-			super.layout();
+			image.x = align(x + GAP);
+			image.y = align(y + GAP);
 			
-			image.x = align( x + (width - image.width()) / 2 );
-			image.y = align( y );
+			float labelX = image.x + GAP + image.width;
 			
-			label.x = align( x + (width - label.width()) / 2 );
-			label.y = align( image.y + image.height() +2 );
+			gameName.x = align( labelX );
+			gameName.y = align( image.y + GAP );
+			
+			gameAuthor.x = align( labelX );
+			gameAuthor.y = align( gameName.y + gameName.baseLine() + GAP );
+			
+			gameVersion.x = align( labelX );
+			gameVersion.y = align( gameAuthor.y + gameAuthor.baseLine() + GAP );
+		}
+		
+		public boolean onClick( float x, float y ) {
+			if (inside( x, y )) {
+				Sample.INSTANCE.play( Assets.SND_DESCEND, 1, 1, 1.2f );
+				OPDGame.switchScene(subGame.titleSceneClass);
+				return true;
+			} else {
+				return false;
+			}
 		}
 		
 		@Override
 		protected void onTouchDown() {
 			image.brightness( 1.5f );
-			Sample.INSTANCE.play( Assets.SND_DESCEND, 1, 1, 1.2f );
+			Sample.INSTANCE.play( Assets.SND_CLICK, 1, 1, 0.8f );
 		}
 		
 		@Override
