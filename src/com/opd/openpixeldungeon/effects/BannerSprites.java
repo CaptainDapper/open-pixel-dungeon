@@ -23,10 +23,10 @@ import com.opd.openpixeldungeon.Assets;
 public class BannerSprites {
 
 	public enum  Type {
-		PIXEL_DUNGEON,
+		PIXEL_DUNGEON/*,
 		BOSS_SLAIN,
 		GAME_OVER,
-		SELECT_YOUR_HERO
+		SELECT_YOUR_HERO*/
 	};
 	
 	public static Image get( Type type ) {
@@ -35,7 +35,7 @@ public class BannerSprites {
 		case PIXEL_DUNGEON:
 			icon.frame( icon.texture.uvRect( 0, 0, 128, 70 ) );
 			break;
-		case BOSS_SLAIN:
+		/*case BOSS_SLAIN:
 			icon.frame( icon.texture.uvRect( 0, 70, 128, 105 ) );
 			break;
 		case GAME_OVER:
@@ -43,7 +43,7 @@ public class BannerSprites {
 			break;
 		case SELECT_YOUR_HERO:
 			icon.frame( icon.texture.uvRect( 0, 140, 128, 161 ) );
-			break; 
+			break; */
 		}
 		return icon;
 	}

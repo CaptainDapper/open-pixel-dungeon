@@ -41,7 +41,7 @@ public class OPDGame extends Game {
 	public static OPDGame opdInstance;
 	protected OPDScene opdScene;
 	
-	public static Class<? extends OPDScene> gameSceneClass;
+	public static Class<? extends OPDScene> titleSceneClass;
 	public static String gameTitle;
     public static String subName;
 	public static String subVersion;
@@ -58,7 +58,7 @@ public class OPDGame extends Game {
 			
 			if (c.getCanonicalName().contains(game.canonicalName)) {
 				gameTitle = game.title;
-				gameSceneClass = game.titleSceneClass;
+				titleSceneClass = game.titleSceneClass;
 				subName = game.refName;
 				subVersion = game.version;
 				subVersionCode = game.versionCode;
@@ -71,7 +71,7 @@ public class OPDGame extends Game {
 		if (!gameFound) {
 			SubGames.SubGame defaultGame = new SubGames.SubGame();
 			gameTitle = defaultGame.title;
-			gameSceneClass = defaultGame.titleSceneClass;
+			titleSceneClass = defaultGame.titleSceneClass;
 			subName = defaultGame.refName;
 			subVersion = defaultGame.version;
 			subVersionCode = defaultGame.versionCode;
@@ -241,14 +241,7 @@ public class OPDGame extends Game {
 	
 	public static void brightness( boolean value ) {
 		Preferences.INSTANCE.put( Preferences.KEY_BRIGHTNESS, value );
-		
-		if (gameSceneClass == com.watabou.pixeldungeon.scenes.GameScene.class) {
-			((com.watabou.pixeldungeon.scenes.GameScene)scene()).brightness( value );
-		
-		} else if (gameSceneClass == com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene.class) {
-			((com.shatteredpixel.shatteredpixeldungeon.scenes.GameScene)scene()).brightness( value );
-		
-		}
+		// TODO need to figure out ingame brightness adjustments? I think?
 	}
 	
 	public static boolean brightness() {

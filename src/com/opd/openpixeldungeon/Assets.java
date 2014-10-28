@@ -158,26 +158,24 @@ public class Assets {
 	public static final String SND_SECRET	= "snd_secret.mp3";
 	public static final String SND_BONES	= "snd_bones.mp3";
 */
+	public static final String ARCS_BG		= "vanilla/arcs1.png";
+	public static final String ARCS_FG		= "vanilla/arcs2.png";
+
+	public static final String ICONS	= "vanilla/icons.png";
+	
+	public static final String FONTS1X	= "vanilla/font1x.png";
+	public static final String FONTS15X	= "vanilla/font15x.png";
+	public static final String FONTS2X	= "vanilla/font2x.png";
+	public static final String FONTS25X	= "vanilla/font25x.png";
+	public static final String FONTS3X	= "vanilla/font3x.png";
+
+	public static final String SND_CLICK	= "vanilla/snd_click.mp3";
+	
+	public static final String SND_DESCEND	= "vanilla/snd_descend.mp3";
+	
+	
+	
 	public static final String BANNERS	= "banners.png";
-	public static final String ARCS_BG		= "watabou/arcs1.png";
-	public static final String ARCS_FG		= "watabou/arcs2.png";
-	public static final String DASHBOARD	= "dashboard.png";
-
-	public static final String ICONS	= "watabou/icons.png";
-	
 	public static final String FIREBALL		= "fireball.png";
-
-	public static final String FONTS1X	= "watabou/font1x.png";
-	public static final String FONTS15X	= "watabou/font15x.png";
-	public static final String FONTS2X	= "watabou/font2x.png";
-	public static final String FONTS25X	= "watabou/font25x.png";
-	public static final String FONTS3X	= "watabou/font3x.png";
-
-	public static final String SND_CLICK	= "watabou/snd_click.mp3";
-	
-	public static final String SND_DESCEND	= "watabou/snd_descend.mp3";
-
-	public static final String WATABOU_ICON = "watabou_icon.png";
-	public static final String SHATTERED_ICON = "shattered_icon.png";
-	public static final String MOFOOD_ICON = "mofood_icon.png";
+	public static final String CHROME	= "chrome.png";
 }

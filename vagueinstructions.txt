@@ -1,12 +1,15 @@
 These are the steps I took to build mofoods into OPD. 10/23/2014
 
 1) moved all assets/* to assets/mofoods/*
-2) saved icon as 32x32 png named assets/mofoods_icon.png
+2) saved icon as 16x16 png named assets/mofoods_icon.png
 3) Updated assets file to reflect changes (Eg. added "mofoods/" to all the strings)
 4) Updated .dat files to be mod-specific (Eg. added "mofoods-" to all .dat strings)
-5) displayVersion in TitleScene
-6) Updated onBackPressed in AboutScene
-7) Updated WndHero and WndRankings to display version numbers
-8) Dungeon.saveGame() use OPDGame.subVersion for bundle version styorage
-9) Annihilated the PixelDungeon file
-10) remember to check for new preferences
+5) PixelScene extends OPDScene
+6) PixelDungeon extends OPDGame, annihilate contents, careful to recreate/override your changes to this file.
+7) remember to check for new preferences/other additions to pixeldungeon file
+8) displayVersion in TitleScene and RankingsScene
+9) Updated WndHero and WndRanking to display version numbers
+10) Dungeon.saveGame() use OPDGame.subVersion for bundle version styorage
+
+Lobby Changes
+11) created SubGame type

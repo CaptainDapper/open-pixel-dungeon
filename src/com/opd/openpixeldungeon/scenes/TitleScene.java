@@ -22,9 +22,11 @@ import java.util.ArrayList;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Image;
+import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.ui.Button;
 import com.watabou.noosa.ui.Component;
+import com.watabou.pixeldungeon.Chrome;
 import com.opd.noosa.OPDGame;
 import com.opd.openpixeldungeon.Assets;
 import com.opd.openpixeldungeon.SubGames;
@@ -127,17 +129,22 @@ public class TitleScene extends PixelScene {
 	}
 
 	private static class ListItem extends Button {
-		private static final int GAP = 2;
+		private SubGame subGame;
+		private Image image;
+		private NinePatch bg;
 		private BitmapText gameName;
 		private BitmapText gameAuthor;
 		private BitmapText gameVersion;
-		private Image image;
-		private SubGame subGame;
+
+		private static final int GAP = 2;
+		private static final int MARGIN = 7;
+		private static final int BUTTON_WIDTH = WIDTH;
+		private static final int BUTTON_HEIGHT = 38;
 		
 		public ListItem(SubGame subGame) {
 			super();
 			
-			image.texture(subGame.asset);
+			image.texture( subGame.asset );
 			
 			gameName.text( subGame.title );
 			gameName.measure();
@@ -150,43 +157,45 @@ public class TitleScene extends PixelScene {
 			gameVersion.measure();
 			gameVersion.hardlight(0x888888);
 			
-			setSize( WIDTH, 36 );
+			setSize( BUTTON_WIDTH, BUTTON_HEIGHT );
 			
 			this.subGame = subGame;
+		}
+		
+		@Override
+		protected void layout() {
+			bg.size( BUTTON_WIDTH, BUTTON_HEIGHT );
+			
+			bg.x = x;
+			bg.y = y;
+			
+			gameName.x = align( x + MARGIN );
+			gameName.y = align( y + MARGIN );
+			
+			image.x = align(gameName.x);
+			image.y = align(gameName.y + gameName.baseLine() + GAP - 1);
+			
+			gameAuthor.x = align( image.x + image.width + GAP );
+			gameAuthor.y = align( gameName.y + gameName.baseLine() + GAP );
+			
+			gameVersion.x = align( image.x + image.width + GAP );
+			gameVersion.y = align( gameAuthor.y + gameAuthor.baseLine() + GAP );
 		}
 		
 		@Override
 		protected void createChildren() {
 			super.createChildren();
 
+			bg = Chrome.get( Chrome.Type.WINDOW );
+			add( bg );
 			image = new Image();
 			add( image );
-
 			gameName = createText( 9 );
 			add( gameName );
-			
 			gameAuthor = createText( 6 );
 			add( gameAuthor );
-			
 			gameVersion = createText( 6 );
 			add( gameVersion );
-		}
-		
-		@Override
-		protected void layout() {
-			image.x = align(x + GAP);
-			image.y = align(y + GAP);
-			
-			float labelX = image.x + GAP + image.width;
-			
-			gameName.x = align( labelX );
-			gameName.y = align( image.y + GAP );
-			
-			gameAuthor.x = align( labelX );
-			gameAuthor.y = align( gameName.y + gameName.baseLine() + GAP );
-			
-			gameVersion.x = align( labelX );
-			gameVersion.y = align( gameAuthor.y + gameAuthor.baseLine() + GAP );
 		}
 		
 		public boolean onClick( float x, float y ) {

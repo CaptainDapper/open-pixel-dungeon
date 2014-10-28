@@ -2,25 +2,38 @@ package com.opd.openpixeldungeon;
 
 import com.opd.noosa.OPDGame;
 import com.opd.noosa.OPDScene;
-import com.opd.openpixeldungeon.Assets;
 
 public class SubGames {
 	public static SubGame[] all = {
 		new watabouGame(),
+		new easyGame(),
 		new shatteredGame(),
 		new mofoodGame()
 	};
 	
 	private static class watabouGame extends SubGame {
 		{
-			title = "Pixel Dungeon";
-			refName = "watabou";
+			title = "Pixel Dungeon (Vanilla)";
+			refName = "vanilla";
 			author = "watabou";
 			version = "1.7.2a";
 			versionCode = 62;
 			titleSceneClass = com.watabou.pixeldungeon.scenes.TitleScene.class;
 			canonicalName = "com.watabou.pixeldungeon.scenes";
-			asset = Assets.WATABOU_ICON;
+			asset = "vanilla_icon.png"; 
+		}
+	}
+	
+	private static class easyGame extends SubGame {
+		{
+			title = "Easy Pixel Dungeon";
+			refName = "easy";
+			author = "painless";
+			version = "3.0.15";
+			versionCode = 77;
+			titleSceneClass = com.painless.easy.scenes.TitleScene.class;
+			canonicalName = "com.painless.easy.scenes";
+			asset = "easy_icon.png";
 		}
 	}
 	
@@ -33,7 +46,7 @@ public class SubGames {
 			versionCode = 12;
 			titleSceneClass = com.shatteredpixel.shatteredpixeldungeon.scenes.TitleScene.class;
 			canonicalName = "com.shatteredpixel.shatteredpixeldungeon.scenes";
-			asset = Assets.SHATTERED_ICON;
+			asset = "shattered_icon.png";
 		}
 	}
 	
@@ -46,7 +59,7 @@ public class SubGames {
 			versionCode = 59;
 			titleSceneClass = com.watabou.mofoodpd.scenes.TitleScene.class;
 			canonicalName = "com.watabou.mofoodpd.scenes";
-			asset = Assets.MOFOOD_ICON;
+			asset = "mofood_icon.png";
 		}
 	}
 	
