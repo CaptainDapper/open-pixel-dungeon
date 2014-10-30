@@ -55,7 +55,7 @@ public class SubGames {
 			title = "Mo' Food Mod";
 			refName = "mofood";
 			author = "roastedlasagna";
-			version = "1.1.3";
+			version = "1.1.4a";
 			versionCode = 59;
 			titleSceneClass = com.watabou.mofoodpd.scenes.TitleScene.class;
 			canonicalName = "com.watabou.mofoodpd.scenes";
