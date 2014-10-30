@@ -26,7 +26,7 @@ public class SubGames {
 	
 	private static class easyGame extends SubGame {
 		{
-			title = "Easy Pixel Dungeon";
+			title = "Easy Dungeon";
 			refName = "easy";
 			author = "painless";
 			version = "3.0.15";
