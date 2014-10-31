@@ -32,7 +32,7 @@ https://github.com/00-Evan/PD-classes
 https://github.com/sloanr333/opd-shattered  
 https://github.com/sloanr333/opd-watabou
 
-Alternatively, you can download my latest build (may be buggy) here: http://www.openpixeldungeon.com/opd/OpenPixelDungeon.apk
+Alternatively, you can download my latest build (may be buggy) here: http://www.openpixeldungeon.com/download/
 
 ### Disclaimer
 Thank you! to:
