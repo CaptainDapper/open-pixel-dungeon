@@ -32,10 +32,10 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.scenes.PixelScene;
 */
-package com.opd.openpixeldungeon;
+package com.opd.lobby;
 
-import com.opd.noosa.OPDGame;
-import com.opd.openpixeldungeon.scenes.TitleScene;
+import com.opd.lobby.scenes.TitleScene;
+import com.opd.openpixeldungeon.OPDGame;
 
 public class OpenPixelDungeon extends OPDGame {
 

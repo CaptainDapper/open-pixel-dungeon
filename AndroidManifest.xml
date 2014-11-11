@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.opd.openpixeldungeon"
-	android:versionCode="06"
-	android:versionName="0.3.2b"
+	package="com.opd.lobby"
+	android:versionCode="07"
+	android:versionName="0.3.3"
 	android:installLocation="auto">
 
     <uses-permission android:name="android.permission.VIBRATE"/>
@@ -27,7 +27,7 @@
 		android:allowBackup="false">
 		<activity
 			android:label="@string/app_name"
-			android:name=".OpenPixelDungeon"
+			android:name="com.opd.lobby.OpenPixelDungeon"
 			android:screenOrientation="portrait">
 			<intent-filter >
 				<action android:name="android.intent.action.MAIN" />

@@ -15,9 +15,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package com.opd.openpixeldungeon.ui;
+package com.opd.lobby.ui;
 
-import com.opd.openpixeldungeon.scenes.PixelScene;
+import com.opd.lobby.scenes.PixelScene;
 import com.watabou.input.Touchscreen.Touch;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.TouchArea;

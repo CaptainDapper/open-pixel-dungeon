@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package com.opd.openpixeldungeon.ui;
+package com.opd.lobby.ui;
 
 import com.watabou.noosa.Image;
-import com.opd.openpixeldungeon.Assets;
+import com.opd.lobby.Assets;
 
 public enum Icons {
 

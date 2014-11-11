@@ -15,20 +15,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package com.opd.openpixeldungeon.scenes;
+package com.opd.lobby;
 
-import com.watabou.noosa.audio.Sample;
-import com.opd.noosa.OPDScene;
-import com.opd.openpixeldungeon.Assets;
+import com.watabou.noosa.NinePatch;
 
-public class PixelScene extends OPDScene {
+public class Chrome {
+
+	public enum  Type {
+		WINDOW
+	};
 	
-	@Override
-	public void create() {
-		super.create();
-		Sample.INSTANCE.load( 
-				Assets.SND_CLICK, 
-				Assets.SND_DESCEND
-			);
+	public static NinePatch get( Type type ) {
+		switch (type) {
+		case WINDOW:
+			return new NinePatch( Assets.CHROME, 0, 0, 22, 22, 7 );
+		default:
+			return null;
+		}
 	}
 }

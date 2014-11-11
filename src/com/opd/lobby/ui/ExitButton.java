@@ -15,13 +15,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package com.opd.openpixeldungeon.ui;
+package com.opd.lobby.ui;
 
-import com.opd.noosa.OPDGame;
+import com.opd.lobby.Assets;
+import com.opd.openpixeldungeon.OPDGame;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.ui.Button;
-import com.opd.openpixeldungeon.Assets;
 
 public class ExitButton extends Button {
 	

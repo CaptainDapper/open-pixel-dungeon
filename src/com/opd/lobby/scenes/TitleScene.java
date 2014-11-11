@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package com.opd.openpixeldungeon.scenes;
+package com.opd.lobby.scenes;
 
 import java.util.ArrayList;
 
@@ -26,17 +26,16 @@ import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.ui.Button;
 import com.watabou.noosa.ui.Component;
-import com.watabou.pixeldungeon.Chrome;
-import com.opd.noosa.OPDGame;
-import com.opd.openpixeldungeon.Assets;
-import com.opd.openpixeldungeon.SubGames;
-import com.opd.openpixeldungeon.SubGames.SubGame;
-import com.opd.openpixeldungeon.effects.BannerSprites;
-import com.opd.openpixeldungeon.effects.Fireball;
-import com.opd.openpixeldungeon.scenes.PixelScene;
-import com.opd.openpixeldungeon.ui.Archs;
-import com.opd.openpixeldungeon.ui.ExitButton;
-import com.opd.openpixeldungeon.ui.ScrollPane;
+import com.opd.lobby.Assets;
+import com.opd.lobby.Chrome;
+import com.opd.lobby.effects.BannerSprites;
+import com.opd.lobby.effects.Fireball;
+import com.opd.lobby.scenes.PixelScene;
+import com.opd.lobby.ui.Archs;
+import com.opd.lobby.ui.ExitButton;
+import com.opd.lobby.ui.ScrollPane;
+import com.opd.openpixeldungeon.OPDGame;
+import com.opd.openpixeldungeon.SubGame;
 
 public class TitleScene extends PixelScene {
 	
@@ -116,7 +115,7 @@ public class TitleScene extends PixelScene {
 		list.scrollTo( 0, 0 );
 		
 		float pos = 0;
-		for (SubGame theSubGame : SubGames.all) {
+		for (SubGame theSubGame : OPDGame.subGames()) {
 			ListItem gameBtn = new ListItem( theSubGame );
 			gameBtn.setRect( 0, pos, WIDTH, gameBtn.height() );
 			content.add( gameBtn );
@@ -201,7 +200,7 @@ public class TitleScene extends PixelScene {
 		public boolean onClick( float x, float y ) {
 			if (inside( x, y )) {
 				Sample.INSTANCE.play( Assets.SND_DESCEND, 1, 1, 1.2f );
-				OPDGame.switchScene(subGame.titleSceneClass);
+				OPDGame.switchGame(subGame);
 				return true;
 			} else {
 				return false;

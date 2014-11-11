@@ -17,7 +17,6 @@
  */
 package com.opd.openpixeldungeon;
 
-import com.opd.noosa.OPDGame;
 
 import android.content.SharedPreferences;
 

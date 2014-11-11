@@ -15,10 +15,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package com.opd.openpixeldungeon;
+package com.opd.classy;
 
-public class Assets extends DefaultAssets {
-	public static final String BANNERS	= "banners.png";
-	public static final String FIREBALL		= "fireball.png";
-	public static final String CHROME	= "chrome.png";
+import com.opd.openpixeldungeon.OPDGame;
+import com.opd.classy.scenes.TitleScene;
+
+public class Classy extends OPDGame {
+	
+	public Classy() {
+		super( TitleScene.class );
+	}
 }

@@ -15,7 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.opd.noosa;
+package com.opd.openpixeldungeon;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -31,73 +36,73 @@ import com.watabou.noosa.Scene;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
 
-import com.opd.openpixeldungeon.Preferences;
-import com.opd.openpixeldungeon.SubGames;
-import com.opd.openpixeldungeon.scenes.TitleScene;
-import com.opd.openpixeldungeon.scenes.PixelScene;
-
 public class OPDGame extends Game {
-
-	public static OPDGame opdInstance;
-	protected OPDScene opdScene;
-	
-	public static Class<? extends OPDScene> titleSceneClass;
-	public static String gameTitle;
-    public static String subName;
-	public static String subVersion;
-    public static int subVersionCode;
-
 	public OPDGame(Class<? extends Scene> c) {
-		super( TitleScene.class );
+		super( c );
+		origScene = c;
+	}
+
+	private static OPDGame opdInstance;
+	
+	/* SUB GAMES */
+	private ArrayList<SubGame> subGames;
+	private SubGame currentSubGame;
+	private Class<? extends Scene> origScene;
+	 
+	public static ArrayList<SubGame> subGames() {
+		return opdInstance.subGames == null ? opdInstance.subGames = SubGames.load() : opdInstance.subGames;
 	}
 	
-	private static void loadSubGame( Class<? extends Scene> c ) {
-		boolean gameFound = false;
-		for (int i=0; i<SubGames.all.length; i++) {
-			SubGames.SubGame game = SubGames.all[i];
-			
-			if (c.getCanonicalName().contains(game.canonicalName)) {
-				gameTitle = game.title;
-				titleSceneClass = game.titleSceneClass;
-				subName = game.refName;
-				subVersion = game.version;
-				subVersionCode = game.versionCode;
-				
-				gameFound = true;
-				break;
-			}
+	public static SubGame currentSubGame() {
+		return opdInstance.currentSubGame == null ? opdInstance.currentSubGame = new SubGame() : opdInstance.currentSubGame;
+	}
+	
+	private static void setCurrentSubGame( SubGame game ) {
+		opdInstance.currentSubGame = game;
+	}
+
+	public static void switchGame(SubGame subGame) {
+		setCurrentSubGame(subGame);
+		switchScene(subGame.titleClass);
+	}
+
+	public static InputStream openDatInput(String fileDatName) throws FileNotFoundException {
+		String opdFileName = opdInstance.currentSubGame.refName + "-" + fileDatName;
+		Log("Input .dat: " + opdFileName);
+		return instance.openFileInput( opdFileName );
+	}
+
+	public static OutputStream openDatOutput(String fileDatName, int mode) throws FileNotFoundException {
+		String opdFileName = opdInstance.currentSubGame.refName + "-" + fileDatName;
+		Log("Output .dat: " + opdFileName);
+		return instance.openFileOutput( opdFileName, mode );
+	}
+
+	public static boolean deleteDatFile(String fileDatName) {
+		String opdFileName = opdInstance.currentSubGame.refName + "-" + fileDatName;
+		Log("Delete .dat: " + opdFileName);
+		return instance.deleteFile( opdFileName );
+	}
+	
+	public static void Log(String string) {
+		Log.i("OPD", string);
+	}
+
+	public static void Log(String string, boolean b) {
+		if (b) {
+			Log.w("OPD", string);
+		} else {
+			Log(string);
 		}
-		
-		if (!gameFound) {
-			SubGames.SubGame defaultGame = new SubGames.SubGame();
-			gameTitle = defaultGame.title;
-			titleSceneClass = defaultGame.titleSceneClass;
-			subName = defaultGame.refName;
-			subVersion = defaultGame.version;
-			subVersionCode = defaultGame.versionCode;
-		}
 	}
 	
-	public static void switchScene( Class<? extends Scene> c ) {
-		loadSubGame(c);
-		
-		Game.switchScene(c);
-	}
-	
-	@Override
-	protected void switchScene() {
-		opdScene = (OPDScene) requestedScene;
-		
-		super.switchScene();
-	}
+	/* Common PD Stuffs */
 	
 	@Override
 	protected void onCreate( Bundle savedInstanceState ) {
-		super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState); 
 		
 		opdInstance = this;
-
-		loadSubGame( TitleScene.class );
 		
 		updateImmersiveMode();
 		
@@ -113,13 +118,8 @@ public class OPDGame extends Game {
 		Sample.INSTANCE.enable( soundFx() );
 	}
 	
-	public static OPDScene opdScene() {
-		return opdInstance.opdScene;
-	}
-	
 	@Override
 	public void onWindowFocusChanged( boolean hasFocus ) {
-		
 		super.onWindowFocusChanged( hasFocus );
 		
 		if (hasFocus) {
@@ -128,15 +128,16 @@ public class OPDGame extends Game {
 	}
 	
 	public static void switchNoFade( Class<? extends OPDScene> c ) {
-		PixelScene.noFade = true;
+		OPDScene.noFade = true;
 		switchScene( c );
 	}
 	
 	public static void goBack() {
-		if (scene() instanceof TitleScene) {
+		if (scene().getClass() == opdInstance.origScene) {
 			instance.finish();
 		} else {
-			switchScene( TitleScene.class );
+			switchScene( opdInstance.origScene );
+			setCurrentSubGame( new SubGame() );
 		}
 	}
 	
@@ -206,7 +207,7 @@ public class OPDGame extends Game {
 	
 	public static void scaleUp( boolean value ) {
 		Preferences.INSTANCE.put( Preferences.KEY_SCALE_UP, value );
-		switchScene( TitleScene.class );
+		switchScene( opdInstance.origScene );
 	}
 	
 	public static boolean scaleUp() {

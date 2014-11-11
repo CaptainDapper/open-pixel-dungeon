@@ -1,76 +1,118 @@
 package com.opd.openpixeldungeon;
 
-import com.opd.noosa.OPDGame;
-import com.opd.noosa.OPDScene;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SubGames {
-	public static SubGame[] all = {
-		new watabouGame(),
-		new easyGame(),
-		new shatteredGame(),
-		new mofoodGame()
-	};
+	private static ArrayList<? extends SubGame> buildSubGames = new ArrayList<SubGame>(Arrays.asList(
+				new SubGame.classy(),
+				new SubGame.vanilla(),
+				new SubGame.shattered(),
+				new SubGame.easy(),
+				new SubGame.mofood()
+			));
+	private static ArrayList<SubGame> all = new ArrayList<SubGame>();
 	
-	private static class watabouGame extends SubGame {
-		{
-			title = "Pixel Dungeon (Vanilla)";
-			refName = "vanilla";
-			author = "watabou";
-			version = "1.7.2a";
-			versionCode = 62;
-			titleSceneClass = com.watabou.pixeldungeon.scenes.TitleScene.class;
-			canonicalName = "com.watabou.pixeldungeon.scenes";
-			asset = "vanilla_icon.png"; 
+	private static boolean loaded = false; 
+	
+	@SuppressWarnings("unchecked")
+	public static ArrayList<SubGame> load() {
+		if (loaded) return all;
+		
+		OPDGame.Log("Loading SubGames from Build: " + buildSubGames.size());
+		for(SubGame uGame : buildSubGames) {
+			Boolean isFound = true;
+			try {
+				uGame.titleClass = (Class<? extends OPDScene>) Class.forName(uGame.titleSceneClassPath, false, SubGames.class.getClassLoader());
+				//Class Exists
+			} catch(ClassNotFoundException e) {
+			    //No Class Found... WHAT DO!?
+				isFound = false;
+				OPDGame.Log("  " + uGame.refName + " SubGame titleClass Not Found!", true);
+			}
+			if (isFound) {
+				OPDGame.Log("  " + uGame.refName + " loaded");
+				all.add(uGame);
+			}
+		}
+		
+		loaded = true;
+		return all;
+	}
+	
+	/*private static void BLERGattachAnchors() {
+		//THIS IS NOT USED PLZ
+		String[] anchorPoints = { "" };
+		for (String anchor : anchorPoints) {
+			try {
+				BufferedReader reader = new BufferedReader( new InputStreamReader( new FileInputStream(anchor + "Anchor.json") ) );
+				if (reader != null) {
+					JSONObject json = (JSONObject)new JSONTokener( reader.readLine() ).nextValue();
+					reader.close();
+					
+					SubGame subGame = new SubGame();
+					subGame.title = json.getString("title");
+					subGame.refName = json.getString("refName");
+					subGame.author = json.getString("author");
+					subGame.version = json.getString("version");
+					subGame.versionCode = json.getInt("versionCode");
+					subGame.titleSceneClassPath = json.getString("titleSceneClassPath");
+					subGame.asset = json.getString("asset");
+					
+					ClassLoader pcl = SubGames.class.getClassLoader();
+					GameClassLoader gcl = new GameClassLoader(pcl);
+					subGame.titleClass = gcl.loadClass(subGame.titleSceneClassPath);
+					
+					all.add(subGame);
+				}
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (JSONException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				
+			}
 		}
 	}
 	
-	private static class easyGame extends SubGame {
-		{
-			title = "Easy Dungeon";
-			refName = "easy";
-			author = "painless";
-			version = "3.0.15";
-			versionCode = 77;
-			titleSceneClass = com.painless.easy.scenes.TitleScene.class;
-			canonicalName = "com.painless.easy.scenes";
-			asset = "easy_icon.png";
+	private static class GameClassLoader extends ClassLoader {
+		public GameClassLoader(ClassLoader parent) {
+			super(parent);
 		}
-	}
-	
-	private static class shatteredGame extends SubGame {
-		{
-			title = "Shattered Pixel Dungeon";
-			refName = "shattered";
-			author = "00-Evan";
-			version = "0.2.1c";
-			versionCode = 12;
-			titleSceneClass = com.shatteredpixel.shatteredpixeldungeon.scenes.TitleScene.class;
-			canonicalName = "com.shatteredpixel.shatteredpixeldungeon.scenes";
-			asset = "shattered_icon.png";
-		}
-	}
-	
-	private static class mofoodGame extends SubGame {
-		{
-			title = "Mo' Food Mod";
-			refName = "mofood";
-			author = "roastedlasagna";
-			version = "1.1.4a";
-			versionCode = 59;
-			titleSceneClass = com.watabou.mofoodpd.scenes.TitleScene.class;
-			canonicalName = "com.watabou.mofoodpd.scenes";
-			asset = "mofood_icon.png";
-		}
-	}
-	
-	public static class SubGame {
-		public String title = "Lobby";
-		public String refName = "lobby";
-		public String author = "SloanReynolds";
-		public String version = OPDGame.version;
-		public int versionCode = OPDGame.versionCode;
-		public Class<? extends OPDScene> titleSceneClass;
-		public String canonicalName;
-		public String asset;
-	}
+
+	    public Class<? extends OPDScene> loadClass(String name) throws ClassNotFoundException {
+	        if(!"reflection.MyObject".equals(name))
+	                return (Class<? extends OPDScene>)super.loadClass(name);
+
+	        try {
+	            String url = "/" + name.replace(".", "/") + ".java";
+	            URL myUrl = new URL(url);
+	            URLConnection connection = myUrl.openConnection();
+	            InputStream input = connection.getInputStream();
+	            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+	            int data = input.read();
+
+	            while(data != -1){
+	                buffer.write(data);
+	                data = input.read();
+	            }
+
+	            input.close();
+
+	            byte[] classData = buffer.toByteArray();
+
+	            return (Class<? extends OPDScene>)defineClass(name,
+	                    classData, 0, classData.length);
+
+	        } catch (MalformedURLException e) {
+	            e.printStackTrace();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+
+	        return null;
+	    }
+	}*/
 }

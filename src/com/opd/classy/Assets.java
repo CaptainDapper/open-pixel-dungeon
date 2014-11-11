@@ -15,22 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package com.opd.openpixeldungeon;
+package com.opd.classy;
 
-import com.watabou.noosa.NinePatch;
+import com.opd.openpixeldungeon.DefaultAssets;
 
-public class Chrome {
-
-	public enum  Type {
-		WINDOW
-	};
+public class Assets extends DefaultAssets {
 	
-	public static NinePatch get( Type type ) {
-		switch (type) {
-		case WINDOW:
-			return new NinePatch( Assets.CHROME, 0, 0, 22, 22, 7 );
-		default:
-			return null;
-		}
-	}
 }

@@ -15,13 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-package com.opd.noosa;
+package com.opd.openpixeldungeon;
 
 import javax.microedition.khronos.opengles.GL10;
 
 import android.opengl.GLES20;
 
-import com.opd.openpixeldungeon.Assets;
 import com.watabou.input.Touchscreen;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.BitmapTextMultiline;
@@ -89,31 +88,31 @@ public class OPDScene extends Scene {
 			
 			// 3x5 (6)
 			font1x = Font.colorMarked( 
-				BitmapCache.get( Assets.FONTS1X ), 0x00000000, BitmapText.Font.LATIN_FULL );
+				BitmapCache.get( DefaultAssets.FONTS1X ), 0x00000000, BitmapText.Font.LATIN_FULL );
 			font1x.baseLine = 6;
 			font1x.tracking = -1;
 			
 			// 5x8 (10)
 			font15x = Font.colorMarked( 
-					BitmapCache.get( Assets.FONTS15X ), 12, 0x00000000, BitmapText.Font.LATIN_FULL );
+					BitmapCache.get( DefaultAssets.FONTS15X ), 12, 0x00000000, BitmapText.Font.LATIN_FULL );
 			font15x.baseLine = 9;
 			font15x.tracking = -1;
 			
 			// 6x10 (12)
 			font2x = Font.colorMarked( 
-				BitmapCache.get( Assets.FONTS2X ), 14, 0x00000000, BitmapText.Font.LATIN_FULL );
+				BitmapCache.get( DefaultAssets.FONTS2X ), 14, 0x00000000, BitmapText.Font.LATIN_FULL );
 			font2x.baseLine = 11;
 			font2x.tracking = -1;
 			
 			// 7x12 (15)
 			font25x = Font.colorMarked( 
-				BitmapCache.get( Assets.FONTS25X ), 17, 0x00000000, BitmapText.Font.LATIN_FULL );
+				BitmapCache.get( DefaultAssets.FONTS25X ), 17, 0x00000000, BitmapText.Font.LATIN_FULL );
 			font25x.baseLine = 13;
 			font25x.tracking = -1;
 			
 			// 9x15 (18)
 			font3x = Font.colorMarked( 
-				BitmapCache.get( Assets.FONTS3X ), 22, 0x00000000, BitmapText.Font.LATIN_FULL );
+				BitmapCache.get( DefaultAssets.FONTS3X ), 22, 0x00000000, BitmapText.Font.LATIN_FULL );
 			font3x.baseLine = 17;
 			font3x.tracking = -2;
 		}
@@ -326,11 +325,11 @@ public class OPDScene extends Scene {
 		
 		int GAP = 1;
 		
-		BitmapText gameName = OPDScene.createText( "OPD/" + OPDGame.subName, 6 );
+		BitmapText gameName = OPDScene.createText( "OPD/" + OPDGame.currentSubGame().refName, 6 );
 		gameName.measure();
 		gameName.hardlight( 0xbbbbbb );
 		
-		BitmapText version = OPDScene.createText( "v " + OPDGame.subVersion, 6 );
+		BitmapText version = OPDScene.createText( "v " + OPDGame.currentSubGame().version, 6 );
 		version.measure();
 		version.hardlight( 0x888888 );
 		
