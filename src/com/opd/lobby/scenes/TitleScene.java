@@ -19,10 +19,18 @@ package com.opd.lobby.scenes;
 
 import java.util.ArrayList;
 
+import android.content.Intent;
+import android.net.Uri;
+
+import com.shatteredpixel.shatteredpixeldungeon.ui.Window;
+import com.watabou.input.Touchscreen.Touch;
 import com.watabou.noosa.BitmapText;
+import com.watabou.noosa.BitmapTextMultiline;
 import com.watabou.noosa.Camera;
+import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.NinePatch;
+import com.watabou.noosa.TouchArea;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.ui.Button;
 import com.watabou.noosa.ui.Component;
@@ -40,6 +48,8 @@ import com.opd.opdlib.SubGame;
 import com.opd.opdlib.JSONInterface;
 
 public class TitleScene extends PixelScene {
+	private static final String TXT_UPDATE = "Update Available!";
+	private static final String LNK_UPDATE = "http://www.openpixeldungeon.com/download/";
 
 	private static final int WIDTH = 120;
 
@@ -93,7 +103,23 @@ public class TitleScene extends PixelScene {
 		add(btnExit);
 
 		if (JSONInterface.updateAvailable()) {
-			displayVersion(w - 10, h - 10);
+			BitmapTextMultiline link = createMultiline( TXT_UPDATE, 8 );
+			link.maxWidth = Math.min( Camera.main.width, 120 );
+			link.measure();
+			link.hardlight( Window.TITLE_COLOR );
+			add( link );
+			
+			link.x = 0;
+			link.y = h-link.height();
+			
+			TouchArea hotArea = new TouchArea( link ) {
+				@Override
+				protected void onClick( Touch touch ) {
+					Intent intent = new Intent( Intent.ACTION_VIEW, Uri.parse( LNK_UPDATE ) );
+					Game.instance.startActivity( intent );
+				}
+			};
+			add( hotArea );
 		}
 		
 		displayVersion(w, h);
