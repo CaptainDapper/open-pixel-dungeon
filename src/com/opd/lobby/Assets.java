@@ -17,7 +17,7 @@
  */
 package com.opd.lobby;
 
-import com.opd.openpixeldungeon.DefaultAssets;
+import com.opd.opdlib.DefaultAssets;
 
 
 public class Assets extends DefaultAssets {

@@ -35,7 +35,7 @@ import com.watabou.pixeldungeon.scenes.PixelScene;
 package com.opd.lobby;
 
 import com.opd.lobby.scenes.TitleScene;
-import com.opd.openpixeldungeon.OPDGame;
+import com.opd.opdlib.OPDGame;
 
 public class OpenPixelDungeon extends OPDGame {
 

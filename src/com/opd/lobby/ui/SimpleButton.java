@@ -17,52 +17,49 @@
  */
 package com.opd.lobby.ui;
 
-import com.opd.lobby.Assets;
-import com.opd.opdlib.OPDGame;
+import com.watabou.input.Touchscreen.Touch;
 import com.watabou.noosa.Image;
-import com.watabou.noosa.audio.Sample;
-import com.watabou.noosa.ui.Button;
+import com.watabou.noosa.TouchArea;
+import com.watabou.noosa.ui.Component;
 
-public class ExitButton extends Button {
-	
+public class SimpleButton extends Component {
+			
 	private Image image;
 	
-	public ExitButton() {
+	public SimpleButton( Image image ) {
 		super();
 		
+		this.image.copy( image );
 		width = image.width;
 		height = image.height;
 	}
 	
 	@Override
 	protected void createChildren() {
-		super.createChildren();
-		
-		image = Icons.EXIT.get();
+		image = new Image();
 		add( image );
+		
+		add( new TouchArea( image ) {
+			@Override
+			protected void onTouchDown(Touch touch) {
+				image.brightness( 1.2f );
+			};
+			@Override
+			protected void onTouchUp(Touch touch) {
+				image.brightness( 1.0f );
+			};
+			@Override
+			protected void onClick( Touch touch ) {
+				SimpleButton.this.onClick();
+			};
+		} );
 	}
 	
 	@Override
 	protected void layout() {
-		super.layout();
-		
 		image.x = x;
 		image.y = y;
 	}
 	
-	@Override
-	protected void onTouchDown() {
-		image.brightness( 1.5f );
-		Sample.INSTANCE.play( Assets.SND_CLICK );
-	}
-	
-	@Override
-	protected void onTouchUp() {
-		image.resetColor();
-	}
-	
-	@Override
-	protected void onClick() {
-		OPDGame.goBack();
-	}
+	protected void onClick() {};
 }

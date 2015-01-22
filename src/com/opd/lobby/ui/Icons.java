@@ -24,17 +24,17 @@ public enum Icons {
 
 	/*SKULL,
 	BUSY,
-	COMPASS,
+	COMPASS,*/
 	PREFS,
-	WARNING,
+	/*WARNING,
 	TARGET,
 	WATA,
 	WARRIOR,
 	MAGE,
 	ROGUE,
-	HUNTRESS,
+	HUNTRESS,*/
 	CLOSE,
-	DEPTH,
+	/*DEPTH,
 	SLEEP,
 	ALERT,
 	SUPPORT,
@@ -64,11 +64,11 @@ public enum Icons {
 			break;
 		case COMPASS:
 			icon.frame( icon.texture.uvRect( 0, 8, 7, 13 ) );
-			break;
+			break;*/
 		case PREFS:
 			icon.frame( icon.texture.uvRect( 30, 0, 46, 16 ) );
 			break;
-		case WARNING:
+		/*case WARNING:
 			icon.frame( icon.texture.uvRect( 46, 0, 58, 12 ) );
 			break;
 		case TARGET:
@@ -88,11 +88,11 @@ public enum Icons {
 			break;
 		case HUNTRESS:
 			icon.frame( icon.texture.uvRect( 48, 29, 64, 45 ) );
-			break;
+			break;*/
 		case CLOSE:
 			icon.frame( icon.texture.uvRect( 0, 45, 13, 58 ) );
 			break;
-		case DEPTH:
+		/*case DEPTH:
 			icon.frame( icon.texture.uvRect( 45, 12, 54, 20 ) );
 			break;
 		case SLEEP:

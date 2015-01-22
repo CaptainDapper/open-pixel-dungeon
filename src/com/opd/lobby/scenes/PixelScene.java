@@ -19,7 +19,7 @@ package com.opd.lobby.scenes;
 
 import com.watabou.noosa.audio.Sample;
 import com.opd.lobby.Assets;
-import com.opd.openpixeldungeon.OPDScene;
+import com.opd.opdlib.OPDScene;
 
 public class PixelScene extends OPDScene {
 	

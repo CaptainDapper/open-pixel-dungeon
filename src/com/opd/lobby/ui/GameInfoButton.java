@@ -17,29 +17,32 @@
  */
 package com.opd.lobby.ui;
 
-import com.opd.lobby.Assets;
-import com.opd.opdlib.OPDGame;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.ui.Button;
+import com.opd.lobby.Assets;
+import com.opd.lobby.windows.WndGameInfo;
+import com.opd.opdlib.OPDGame;
+import com.opd.opdlib.SubGame;
 
-public class ExitButton extends Button {
+public class GameInfoButton extends Button {
 	
 	private Image image;
-	
-	public ExitButton() {
-		super();
-		
-		width = image.width;
-		height = image.height;
-	}
+	private SubGame subGame;
 	
 	@Override
 	protected void createChildren() {
 		super.createChildren();
 		
-		image = Icons.EXIT.get();
+		image = Icons.PREFS.get();
 		add( image );
+	}
+	
+	public GameInfoButton() {
+		super();
+		
+		width = image.width;
+		height = image.height;
 	}
 	
 	@Override
@@ -63,6 +66,10 @@ public class ExitButton extends Button {
 	
 	@Override
 	protected void onClick() {
-		OPDGame.goBack();
+		OPDGame.scene().add( new WndGameInfo( subGame ) );
+	}
+
+	public void setSubGame(SubGame subGame2) {
+		subGame = subGame2;
 	}
 }
