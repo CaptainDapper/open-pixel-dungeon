@@ -1,7 +1,7 @@
 # Open Pixel Dungeon - Lobby/Framework
 
 ## Download APK
-http://www.openpixeldungeon.com/download/
+https://github.com/CaptainDapper/open-pixel-dungeon/releases/tag/ffs
 
 ## Info
 
